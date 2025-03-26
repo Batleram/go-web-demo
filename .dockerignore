@@ -1,0 +1,5 @@
+.git
+*.sqlite3
+templates/*.go
+Dockerfile
+app
