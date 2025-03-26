@@ -1,1 +1,2 @@
 templates/*.go
+*.sqlite3
