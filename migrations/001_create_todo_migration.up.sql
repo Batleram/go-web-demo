@@ -1,0 +1,7 @@
+
+CREATE TABLE IF NOT EXISTS todo (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task VARCHAR(255),
+    note TEXT,
+    status_id INTEGER NOT NULL REFERENCES todo_status(id)
+);

@@ -1,0 +1,67 @@
+package templates
+
+import "demo/todolist/types"
+import "fmt"
+
+templ OOBTodo(todo types.Todo) {
+	<span hx-swap-oob="beforeend:#todo-list">
+		@Todo(todo)
+	</span>
+}
+
+templ Todo(todo types.Todo) {
+	<article id={ fmt.Sprintf("todo-%d", todo.Id) }>
+		<header
+			if todo.IsComplete() {
+				class="pico-background-green-650"
+			}
+			if todo.IsInProgress() {
+				class="pico-background-yellow-100"
+			}
+		>
+			<span style="pointer-events: none;">
+				<input
+					type="checkbox"
+					readonly
+					style="border-color: var(--pico-color-zinc-950); background-color: var(--pico-color-zinc-650);"
+					if todo.IsComplete() {
+						checked
+					}
+				/>
+			</span>
+			if todo.IsInProgress() {
+				&#9872; 
+			}
+			{ todo.Task }
+		</header>
+		if !todo.IsComplete() {
+			if todo.IsInProgress() {
+				<button
+					hx-patch={ fmt.Sprintf("/todolist/todo?todo=%d&action=pause", todo.Id) }
+					hx-target={ fmt.Sprintf("#todo-%d", todo.Id) }
+					hx-swap="outerHTML"
+				>⏸</button>
+			} else {
+				<button
+					hx-patch={ fmt.Sprintf("/todolist/todo?todo=%d&action=start", todo.Id) }
+					hx-target={ fmt.Sprintf("#todo-%d", todo.Id) }
+					hx-swap="outerHTML"
+				>⏵</button>
+			}
+		}
+		<button
+			hx-delete={ fmt.Sprintf("/todolist/todo?todo=%d", todo.Id) }
+			hx-target={ fmt.Sprintf("#todo-%d", todo.Id) }
+			hx-swap="outerHTML"
+		>
+			Delete
+		</button>
+		if !todo.IsComplete() {
+			<button
+				hx-patch={ fmt.Sprintf("/todolist/todo?todo=%d&action=complete", todo.Id) }
+				hx-target={ fmt.Sprintf("#todo-%d", todo.Id) }
+				hx-swap="outerHTML"
+			>Complete</button>
+		}
+	</article>
+}

@@ -1,0 +1,48 @@
+package templates
+
+import "demo/todolist/types"
+
+type AddTodoFormState struct {
+    ErrorString string
+}
+
+type AppState struct {
+    AddTodoFormState AddTodoFormState
+    Todos []types.Todo
+}
+
+
+templ AddTodoForm(state AddTodoFormState) {
+    <form id="add-todo-form" style="padding: 0 2rem;">
+        <fieldset class="grid" role="group">
+            <input name="task" type="text" placeholder="Task">
+            <button 
+                hx-post="/todolist/todo"
+                hx-target="#add-todo-form"
+                hx-swap="outerHTML"
+                type="submit"
+                style="white-space: nowrap;"
+            >Add Todo</button>
+        </fieldset>
+
+        if len(state.ErrorString) != 0 {
+            <small class="pico-color-red-550">{ state.ErrorString }</small>
+        }
+    </form>
+}
+
+
+templ App(state AppState) {
+@AddTodoForm(state.AddTodoFormState)
+<ul id="todo-list" style="
+        padding-right: var(--padding-increment); 
+        padding-left: var(--padding-increment);
+        overflow-y: scroll;
+        max-height: 100%;
+        padding-bottom: var(--nav-height);
+    ">
+    for _,todo := range state.Todos {
+            @Todo(todo)
+    }
+</ul>
+}

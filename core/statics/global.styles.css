@@ -1,0 +1,16 @@
+:root {
+    --pico-font-size: calc(var(--pico-font-size) * 0.8);
+    --padding-increment: 2rem;
+}
+
+
+button {
+    white-space: nowrap;
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    --nav-height: 100px;
+    grid-template-rows: var(--nav-height) calc(100vh - var(--nav-height));
+}
