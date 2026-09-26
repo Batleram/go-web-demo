@@ -34,6 +34,7 @@ templ Index(appContent templ.Component) {
                     hx-target="#app-content"
                     hx-get="/todolist/app?source=nav"
                     hx-push-url="/todolist/app"
+                    hx-trigger="load once"
                 >Todo List</button></li>
                 <li><button class="outline">Login</button></li>
             </ul>

@@ -15,7 +15,7 @@ type AppState struct {
 templ AddTodoForm(state AddTodoFormState) {
     <form id="add-todo-form" style="padding: 0 2rem;">
         <fieldset class="grid" role="group">
-            <input name="task" type="text" placeholder="Task">
+            <input name="task" type="text" placeholder="Task" />
             <button 
                 hx-post="/todolist/todo"
                 hx-target="#add-todo-form"

@@ -9,7 +9,7 @@ import (
 func RegisterRoutes() *fiber.App {
 	router := fiber.New()
 
-	router.Static("/statics", "./core/statics")
+	router.Static("/statics", "./statics")
 
 	router.Get("/", indexHandler)
 	router.Get("index.html", indexHandler)

@@ -1,3 +1,5 @@
+build/
 templates/*.go
 *.sqlite3
 app
+*.sqlite3

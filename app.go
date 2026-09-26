@@ -4,6 +4,7 @@ import (
 	"demo/core"
 	"demo/todolist"
 	todolistDatabase "demo/todolist/database"
+	"path/filepath"
 	"fmt"
 	"os"
 
@@ -18,7 +19,13 @@ import (
 )
 
 func main() {
-	db, err := setupDatabase("./test.sqlite3")
+	exepath, err := os.Executable()
+	if err != nil {
+		fmt.Printf("Failed to get exepath: %s\n", err.Error())
+		os.Exit(1)
+	}
+	exedir := filepath.Dir(exepath)
+	db, err := setupDatabase(exedir + "/test.sqlite3")
 	if err != nil {
 		fmt.Printf("Error opening the database: %s\n", err.Error())
 		os.Exit(1)
@@ -35,9 +42,9 @@ func main() {
 	app := fiber.New()
 
 	app.Use(logger.New())
-    if mountTodoList(app, db) != nil {
-        fmt.Println("ERROR: Failed to mount todolist app... SKIPPING")
-    }
+	if mountTodoList(app, db) != nil {
+		fmt.Println("ERROR: Failed to mount todolist app... SKIPPING")
+	}
 
 	app.Mount("/", core.RegisterRoutes())
 
@@ -57,7 +64,7 @@ func mountTodoList(app *fiber.App, db *sql.DB) error {
 	}
 
 	app.Mount("/todolist", todolistRouter)
-    return nil
+	return nil
 }
 
 func setupDatabase(connectionUrl string) (*sql.DB, error) {
