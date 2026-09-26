@@ -1,0 +1,15 @@
+# Placeme in /etc/systemd/system
+[Unit]
+Description=An amazing and useful app
+
+[Service]
+User=www-data
+Group=www-data
+SyslogIdentifier=amazingapp
+WorkingDirectory=NEED TO BE FILLED
+ExecStart=NEED TO BE FILLED
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
