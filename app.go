@@ -4,9 +4,9 @@ import (
 	"demo/core"
 	"demo/todolist"
 	todolistDatabase "demo/todolist/database"
-	"path/filepath"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"database/sql"
 
@@ -19,6 +19,13 @@ import (
 )
 
 func main() {
+	host := "0.0.0.0:3000"
+	if len(os.Args) < 3 {
+		fmt.Printf("Host and port not specified, using defaults\n")
+	}else {
+		host = fmt.Sprintf("%s:%s", os.Args[1], os.Args[2])
+	}
+
 	exepath, err := os.Executable()
 	if err != nil {
 		fmt.Printf("Failed to get exepath: %s\n", err.Error())
@@ -48,7 +55,8 @@ func main() {
 
 	app.Mount("/", core.RegisterRoutes())
 
-	app.Listen(":3000")
+
+	app.Listen(host)
 
 }
 
