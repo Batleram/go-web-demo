@@ -6,7 +6,7 @@ If you want to build this, simply run
 make
 ```
 
-You can then run ./build/app
+You can then run `./build/app`
 
 You can specify host and port as argv1 and argv2 respectively
 
